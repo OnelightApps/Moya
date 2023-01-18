@@ -33,7 +33,7 @@ public enum MoyaError: Swift.Error {
 
 public extension MoyaError {
     /// Depending on error type, returns a `Response` object.
-    var response: RxMoya.Response? {
+    var response: Response? {
         switch self {
         case .imageMapping(let response): return response
         case .jsonMapping(let response): return response

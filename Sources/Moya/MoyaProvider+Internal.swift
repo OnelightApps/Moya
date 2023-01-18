@@ -76,7 +76,7 @@ public extension MoyaProvider {
     }
 
     // swiftlint:disable:next function_parameter_count
-    private func performRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, progress: OnelightMoya.ProgressBlock?, completion: @escaping Moya.Completion, endpoint: Endpoint, stubBehavior: Moya.StubBehavior) -> Cancellable {
+    private func performRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, progress: OnelightMoya.ProgressBlock?, completion: @escaping OnelightMoya.Completion, endpoint: Endpoint, stubBehavior: OnelightMoya.StubBehavior) -> Cancellable {
         switch stubBehavior {
         case .never:
             switch endpoint.task {
@@ -172,7 +172,7 @@ private extension MoyaProvider {
         }
     }
 
-    func sendUploadMultipart(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, multipartBody: [MultipartFormData], progress: Moya.ProgressBlock? = nil, completion: @escaping Moya.Completion) -> CancellableToken {
+    func sendUploadMultipart(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, multipartBody: [MultipartFormData], progress: OnelightMoya.ProgressBlock? = nil, completion: @escaping OnelightMoya.Completion) -> CancellableToken {
         let formData = RequestMultipartFormData()
         formData.applyMoyaMultipartFormData(multipartBody)
 
@@ -232,7 +232,7 @@ private extension MoyaProvider {
     }
 
     // swiftlint:disable:next cyclomatic_complexity
-    func sendAlamofireRequest<T>(_ alamoRequest: T, target: Target, callbackQueue: DispatchQueue?, progress progressCompletion: OnelightMoya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken where T: Requestable, T: Request {
+    func sendAlamofireRequest<T>(_ alamoRequest: T, target: Target, callbackQueue: DispatchQueue?, progress progressCompletion: OnelightMoya.ProgressBlock?, completion: @escaping OnelightMoya.Completion) -> CancellableToken where T: Requestable, T: Request {
         // Give plugins the chance to alter the outgoing request
         let plugins = self.plugins
         var progressAlamoRequest = alamoRequest
