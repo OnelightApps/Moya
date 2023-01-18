@@ -11,7 +11,7 @@ import CombineMoya
     import OHHTTPStubsSwift
 #endif
 
-@testable import Moya
+@testable import OnelightMoya
 
 final class MoyaProviderCombineSpec: QuickSpec {
 
@@ -149,7 +149,7 @@ final class MoyaProviderCombineSpec: QuickSpec {
 
                     expect(provider.inflightRequests.keys.count).to(equal(0))
 
-                    var receivedResponse: Moya.Response!
+                    var receivedResponse: OnelightMoya.Response!
 
                     // If we do not name the variable, Combine's Cancellable will cancel itself
                     let cancellable1 = signalProducer1.sink(receiveCompletion: { completion in

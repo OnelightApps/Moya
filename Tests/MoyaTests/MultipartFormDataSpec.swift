@@ -2,7 +2,7 @@ import Quick
 import Nimble
 import Foundation
 
-@testable import Moya
+@testable import OnelightMoya
 
 final class MultiPartFormData: QuickSpec {
     override func spec() {

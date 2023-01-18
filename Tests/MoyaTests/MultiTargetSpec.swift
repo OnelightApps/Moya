@@ -2,7 +2,7 @@ import Quick
 import Nimble
 import Foundation
 
-@testable import Moya
+@testable import OnelightMoya
 
 final class MultiTargetSpec: QuickSpec {
     override func spec() {
@@ -10,7 +10,7 @@ final class MultiTargetSpec: QuickSpec {
             struct StructAPI: TargetType, AccessTokenAuthorizable {
                 let baseURL = URL(string: "http://example.com")!
                 let path = "/endpoint"
-                let method = Moya.Method.get
+                let method = OnelightMoya.Method.get
                 let task = Task.requestParameters(parameters: ["key": "value"], encoding: JSONEncoding.default)
                 let sampleData = "sample data".data(using: .utf8)!
                 let validationType: ValidationType = .successCodes

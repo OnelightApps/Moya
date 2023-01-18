@@ -1,5 +1,5 @@
 import Quick
-import Moya
+import OnelightMoya
 import Nimble
 import Foundation
 
@@ -48,7 +48,7 @@ final class EndpointSpec: QuickSpec {
     private var simpleGitHubEndpoint: Endpoint {
         let target: GitHub = .zen
         let headerFields = ["Title": "Dominar"]
-        return Endpoint(url: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: Moya.Method.get, task: .requestPlain, httpHeaderFields: headerFields)
+        return Endpoint(url: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: OnelightMoya.Method.get, task: .requestPlain, httpHeaderFields: headerFields)
     }
 
     override func spec() {
@@ -613,7 +613,7 @@ extension Empty: TargetType {
     // None of these matter since the Empty has no cases and can't be instantiated.
     var baseURL: URL { URL(string: "http://example.com")! }
     var path: String { "" }
-    var method: Moya.Method { .get }
+    var method: OnelightMoya.Method { .get }
     var parameters: [String: Any]? { nil }
     var parameterEncoding: ParameterEncoding { URLEncoding.default }
     var task: Task { .requestPlain }

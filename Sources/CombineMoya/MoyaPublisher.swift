@@ -1,7 +1,7 @@
 #if canImport(Combine)
 
 import Combine
-import Moya
+import OnelightMoya
 
 // This should be already provided in Combine, but it's not.
 // Ideally we would like to remove it, in favor of a framework-provided solution, ASAP.
@@ -12,10 +12,10 @@ internal class MoyaPublisher<Output>: Publisher {
     internal typealias Failure = MoyaError
 
     private class Subscription: Combine.Subscription {
-        private let performCall: () -> Moya.Cancellable?
-        private var cancellable: Moya.Cancellable?
+        private let performCall: () -> OnelightMoya.Cancellable?
+        private var cancellable: OnelightMoya.Cancellable?
 
-        init(subscriber: AnySubscriber<Output, MoyaError>, callback: @escaping (AnySubscriber<Output, MoyaError>) -> Moya.Cancellable?) {
+        init(subscriber: AnySubscriber<Output, MoyaError>, callback: @escaping (AnySubscriber<Output, MoyaError>) -> OnelightMoya.Cancellable?) {
             performCall = { callback(subscriber) }
         }
 
@@ -30,9 +30,9 @@ internal class MoyaPublisher<Output>: Publisher {
         }
     }
 
-    private let callback: (AnySubscriber<Output, MoyaError>) -> Moya.Cancellable?
+    private let callback: (AnySubscriber<Output, MoyaError>) -> OnelightMoya.Cancellable?
 
-    init(callback: @escaping (AnySubscriber<Output, MoyaError>) -> Moya.Cancellable?) {
+    init(callback: @escaping (AnySubscriber<Output, MoyaError>) -> OnelightMoya.Cancellable?) {
         self.callback = callback
     }
 

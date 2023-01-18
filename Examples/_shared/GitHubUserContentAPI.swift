@@ -1,5 +1,5 @@
 import Foundation
-import Moya
+import OnelightMoya
 
 let gitHubUserContentProvider = MoyaProvider<GitHubUserContent>(plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))])
 

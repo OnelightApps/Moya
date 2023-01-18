@@ -1,7 +1,7 @@
 // swiftlint:disable force_unwrapping
 
 import Foundation
-import Moya
+import OnelightMoya
 
 // MARK: - Provider setup
 
@@ -44,7 +44,7 @@ extension GitHub: TargetType {
             return "/users/\(name.urlEscaped)/repos"
         }
     }
-    public var method: Moya.Method { .get }
+    public var method: OnelightMoyaMethod { .get }
 
     public var task: Task {
         switch self {
@@ -82,7 +82,7 @@ public func url(_ route: TargetType) -> String {
 
 // MARK: - Response Handlers
 
-extension Moya.Response {
+extension OnelightOnelightOnelightOnelightMoya.Response {
     func mapNSArray() throws -> NSArray {
         let any = try self.mapJSON()
         guard let array = any as? NSArray else {

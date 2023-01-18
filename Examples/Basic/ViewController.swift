@@ -1,5 +1,5 @@
 import UIKit
-import Moya
+import OnelightMoya
 import Combine
 import CombineMoya
 

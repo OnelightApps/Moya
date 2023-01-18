@@ -9,7 +9,7 @@ import OHHTTPStubs
 import OHHTTPStubsSwift
 #endif
 
-@testable import Moya
+@testable import OnelightMoya
 
 final class MoyaProviderSpec: QuickSpec {
     override func spec() {
@@ -561,7 +561,7 @@ final class MoyaProviderSpec: QuickSpec {
             struct StructAPI: TargetType {
                 let baseURL = URL(string: "http://example.com")!
                 let path = "/endpoint"
-                let method = Moya.Method.get
+                let method = OnelightMoya.Method.get
                 let task = Task.requestParameters(parameters: ["key": "value"], encoding: URLEncoding.default)
                 let sampleData = "sample data".data(using: .utf8)!
                 let headers: [String: String]? = ["headerKey": "headerValue"]
@@ -592,7 +592,7 @@ final class MoyaProviderSpec: QuickSpec {
             }
 
             it("uses correct method") {
-                var requestMethod: Moya.Method?
+                var requestMethod: OnelightMoya.Method?
                 let endpointResolution: MoyaProvider<MultiTarget>.RequestClosure = { endpoint, done in
                     requestMethod = endpoint.method
                     do {
@@ -660,7 +660,7 @@ final class MoyaProviderSpec: QuickSpec {
             struct PathlessAPI: TargetType {
                 let baseURL = URL(string: "http://example.com/123/somepath?X-ABC-Asd=123")!
                 let path = ""
-                let method = Moya.Method.get
+                let method = OnelightMoya.Method.get
                 let task = Task.requestParameters(parameters: ["key": "value"], encoding: URLEncoding.default)
                 let sampleData = "sample data".data(using: .utf8)!
                 let headers: [String: String]? = nil
@@ -687,7 +687,7 @@ final class MoyaProviderSpec: QuickSpec {
 
             it("returns identical response for inflight requests") {
                 let target: GitHub = .zen
-                var receivedResponse: Moya.Response!
+                var receivedResponse: OnelightMoya.Response!
 
                 expect(provider.inflightRequests.keys.count).to( equal(0) )
 

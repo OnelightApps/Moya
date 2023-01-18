@@ -1,4 +1,4 @@
-import Moya
+import OnelightMoya
 
 #if canImport(UIKit)
     import UIKit
@@ -24,7 +24,7 @@ extension GitHub: TargetType {
         }
     }
 
-    var method: Moya.Method { .get }
+    var method: OnelightOnelightMoya.Method { .get }
 
     var task: Task { .requestPlain }
 
@@ -57,7 +57,7 @@ func url(_ route: TargetType) -> String {
 }
 
 let failureEndpointClosure = { (target: GitHub) -> Endpoint in
-    let error = NSError(domain: "com.moya.moyaerror", code: 0, userInfo: [NSLocalizedDescriptionKey: "Houston, we have a problem"])
+    let error = NSError(domain: "com.OnelightMoya.moyaerror", code: 0, userInfo: [NSLocalizedDescriptionKey: "Houston, we have a problem"])
     return Endpoint(url: url(target), sampleResponseClosure: {.networkError(error)}, method: target.method, task: target.task, httpHeaderFields: target.headers)
 }
 
@@ -81,7 +81,7 @@ enum HTTPBin: TargetType, AccessTokenAuthorizable {
         }
     }
 
-    var method: Moya.Method {
+    var method: OnelightMoya.Method {
         switch self {
         case .basicAuth, .bearer:
             return .get
@@ -150,7 +150,7 @@ extension GitHubUserContent: TargetType {
             return "/Moya/Moya/master/web/\(contentPath)"
         }
     }
-    public var method: Moya.Method {
+    public var method: OnelightMoya.Method {
         switch self {
         case .downloadMoyaWebContent, .requestMoyaWebContent:
             return .get

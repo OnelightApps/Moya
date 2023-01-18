@@ -7,10 +7,10 @@ import OHHTTPStubs
 import OHHTTPStubsSwift
 #endif
 
-@testable import Moya
+@testable import OnelightMoya
 @testable import ReactiveMoya
 
-func beIdenticalToResponse(_ expectedValue: Moya.Response) -> Predicate<Moya.Response> {
+func beIdenticalToResponse(_ expectedValue: OnelightMoya.Response) -> Predicate<OnelightMoya.Response> {
     Predicate { expression in
         let test: Bool
         if let value = try expression.evaluate(), value == expectedValue {

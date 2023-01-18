@@ -2,7 +2,7 @@
 
 import Foundation
 import Combine
-import Moya
+import OnelightMoya
 
 #if canImport(UIKit)
     import UIKit.UIImage

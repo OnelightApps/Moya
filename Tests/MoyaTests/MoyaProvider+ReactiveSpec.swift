@@ -7,7 +7,7 @@ import OHHTTPStubs
 import OHHTTPStubsSwift
 #endif
 
-@testable import Moya
+@testable import OnelightMoya
 @testable import ReactiveMoya
 
 final class MoyaProviderReactiveSpec: QuickSpec {
@@ -109,12 +109,12 @@ final class MoyaProviderReactiveSpec: QuickSpec {
 
             it("returns identical signalproducers for inflight requests") {
                 let target: GitHub = .zen
-                let signalProducer1: SignalProducer<Moya.Response, MoyaError> = provider.reactive.request(target)
-                let signalProducer2: SignalProducer<Moya.Response, MoyaError> = provider.reactive.request(target)
+                let signalProducer1: SignalProducer<OnelightMoya.Response, MoyaError> = provider.reactive.request(target)
+                let signalProducer2: SignalProducer<OnelightMoya.Response, MoyaError> = provider.reactive.request(target)
 
                 expect(provider.inflightRequests.keys.count).to( equal(0) )
 
-                var receivedResponse: Moya.Response!
+                var receivedResponse: OnelightMoya.Response!
 
                 signalProducer1.startWithResult { result in
                     if case .success(let response) = result {

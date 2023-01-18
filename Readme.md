@@ -137,7 +137,7 @@ pod 'Moya/Combine', '~> 15.0'
 Then run `pod install`.
 
 In any file you'd like to use Moya in, don't forget to
-import the framework with `import Moya`.
+import the framework with `import OnelightMoya`.
 
 ### Carthage
 

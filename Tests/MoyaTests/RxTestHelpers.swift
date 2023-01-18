@@ -1,4 +1,4 @@
-import Moya
+import OnelightMoya
 import RxSwift
 
 extension Response {

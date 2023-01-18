@@ -1,10 +1,10 @@
 import Foundation
 
-@testable import Moya
+@testable import OnelightMoya
 
 final class TestingPlugin: PluginType {
     var request: (RequestType, TargetType)?
-    var result: Result<Moya.Response, MoyaError>?
+    var result: Result<OnelightMoya.Response, MoyaError>?
     var didPrepare = false
 
     func prepare(_ request: URLRequest, target: TargetType) -> URLRequest {
@@ -21,7 +21,7 @@ final class TestingPlugin: PluginType {
         didPrepare = request.request?.allHTTPHeaderFields?["prepared"] == "yes"
     }
 
-    func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) {
+    func didReceive(_ result: Result<OnelightOnelightMoya.Response, MoyaError>, target: TargetType) {
         self.result = result
     }
 

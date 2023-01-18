@@ -19,13 +19,13 @@ public extension Method {
 /// Internal extension to keep the inner-workings outside the main Moya.swift file.
 public extension MoyaProvider {
     /// Performs normal requests.
-    func requestNormal(_ target: Target, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> Cancellable {
+    func requestNormal(_ target: Target, callbackQueue: DispatchQueue?, progress: OnelightMoya.ProgressBlock?, completion: @escaping OnelightMoya.Completion) -> Cancellable {
         let endpoint = self.endpoint(target)
         let stubBehavior = self.stubClosure(target)
         let cancellableToken = CancellableWrapper()
 
         // Allow plugins to modify response
-        let pluginsWithCompletion: Moya.Completion = { result in
+        let pluginsWithCompletion: OnelightMoya.Completion = { result in
             let processedResult = self.plugins.reduce(result) { $1.process($0, target: target) }
             completion(processedResult)
         }
@@ -58,7 +58,7 @@ public extension MoyaProvider {
                 return
             }
 
-            let networkCompletion: Moya.Completion = { result in
+            let networkCompletion: OnelightMoya.Completion = { result in
               if self.trackInflights {
                 self.inflightRequests[endpoint]?.forEach { $0(result) }
                 self.internalInflightRequests.removeValue(forKey: endpoint)
@@ -76,7 +76,7 @@ public extension MoyaProvider {
     }
 
     // swiftlint:disable:next function_parameter_count
-    private func performRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion, endpoint: Endpoint, stubBehavior: Moya.StubBehavior) -> Cancellable {
+    private func performRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, progress: OnelightMoya.ProgressBlock?, completion: @escaping Moya.Completion, endpoint: Endpoint, stubBehavior: Moya.StubBehavior) -> Cancellable {
         switch stubBehavior {
         case .never:
             switch endpoint.task {
@@ -97,21 +97,21 @@ public extension MoyaProvider {
         }
     }
 
-    func cancelCompletion(_ completion: Moya.Completion, target: Target) {
+    func cancelCompletion(_ completion: OnelightMoya.Completion, target: Target) {
         let error = MoyaError.underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil), nil)
         plugins.forEach { $0.didReceive(.failure(error), target: target) }
         completion(.failure(error))
     }
 
     /// Creates a function which, when called, executes the appropriate stubbing behavior for the given parameters.
-    final func createStubFunction(_ token: CancellableToken, forTarget target: Target, withCompletion completion: @escaping Moya.Completion, endpoint: Endpoint, plugins: [PluginType], request: URLRequest) -> (() -> Void) { // swiftlint:disable:this function_parameter_count
+    final func createStubFunction(_ token: CancellableToken, forTarget target: Target, withCompletion completion: @escaping OnelightMoya.Completion, endpoint: Endpoint, plugins: [PluginType], request: URLRequest) -> (() -> Void) { // swiftlint:disable:this function_parameter_count
         return {
             if token.isCancelled {
                 self.cancelCompletion(completion, target: target)
                 return
             }
 
-            let validate = { (response: Moya.Response) -> Result<Moya.Response, MoyaError> in
+            let validate = { (response: OnelightMoya.Response) -> Result<OnelightMoya.Response, MoyaError> in
                 let validCodes = target.validationType.statusCodes
                 guard !validCodes.isEmpty else { return .success(response) }
                 if validCodes.contains(response.statusCode) {
@@ -125,12 +125,12 @@ public extension MoyaProvider {
 
             switch endpoint.sampleResponseClosure() {
             case .networkResponse(let statusCode, let data):
-                let response = Moya.Response(statusCode: statusCode, data: data, request: request, response: nil)
+                let response = OnelightMoya.Response(statusCode: statusCode, data: data, request: request, response: nil)
                 let result = validate(response)
                 plugins.forEach { $0.didReceive(result, target: target) }
                 completion(result)
             case .response(let customResponse, let data):
-                let response = Moya.Response(statusCode: customResponse.statusCode, data: data, request: request, response: customResponse)
+                let response = OnelightMoya.Response(statusCode: customResponse.statusCode, data: data, request: request, response: customResponse)
                 let result = validate(response)
                 plugins.forEach { $0.didReceive(result, target: target) }
                 completion(result)
@@ -217,7 +217,7 @@ private extension MoyaProvider {
         return sendAlamofireRequest(alamoRequest, target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)
     }
 
-    func sendRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken {
+    func sendRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, progress: OnelightMoya.ProgressBlock?, completion: @escaping OnelightMoya.Completion) -> CancellableToken {
         let interceptor = self.interceptor(target: target)
         let initialRequest: DataRequest = session.requestQueue.sync {
             let initialRequest = session.request(request, interceptor: interceptor)
@@ -232,7 +232,7 @@ private extension MoyaProvider {
     }
 
     // swiftlint:disable:next cyclomatic_complexity
-    func sendAlamofireRequest<T>(_ alamoRequest: T, target: Target, callbackQueue: DispatchQueue?, progress progressCompletion: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken where T: Requestable, T: Request {
+    func sendAlamofireRequest<T>(_ alamoRequest: T, target: Target, callbackQueue: DispatchQueue?, progress progressCompletion: OnelightMoya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken where T: Requestable, T: Request {
         // Give plugins the chance to alter the outgoing request
         let plugins = self.plugins
         var progressAlamoRequest = alamoRequest

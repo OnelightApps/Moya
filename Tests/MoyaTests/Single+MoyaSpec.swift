@@ -1,5 +1,5 @@
 import Quick
-import Moya
+import OnelightMoya
 import RxSwift
 import Nimble
 import Foundation

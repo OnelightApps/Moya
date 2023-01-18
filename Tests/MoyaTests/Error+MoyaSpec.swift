@@ -1,5 +1,5 @@
 import Nimble
-import Moya
+import OnelightMoya
 
 public func beOfSameErrorType(_ expectedValue: MoyaError) -> Predicate<MoyaError> {
     Predicate { expression -> PredicateResult in

@@ -2,7 +2,7 @@ import Quick
 import Nimble
 import XCTest
 
-@testable import Moya
+@testable import OnelightMoya
 
 final class ErrorTests: QuickSpec {
     override func spec() {

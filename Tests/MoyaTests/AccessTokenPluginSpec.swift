@@ -1,6 +1,6 @@
 import Quick
 import Nimble
-import Moya
+import OnelightMoya
 import Foundation
 
 final class AccessTokenPluginSpec: QuickSpec {

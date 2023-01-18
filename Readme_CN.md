@@ -123,7 +123,7 @@ pod 'Moya/Combine', '~> 15.0'
 
 然后运行 `pod install`。
 
-在任何你想使用 Moya 的文件中，使用 `import Moya` 导入框架。
+在任何你想使用 Moya 的文件中，使用 `import OnelightMoya` 导入框架。
 
 ### Carthage
 

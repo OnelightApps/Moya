@@ -50,7 +50,7 @@ internal extension RequestMultipartFormData {
         append(stream, withLength: length, name: bodyPart.name, fileName: bodyPart.fileName ?? "", mimeType: bodyPart.mimeType ?? "")
     }
 
-    func applyMoyaMultipartFormData(_ multipartBody: [Moya.MultipartFormData]) {
+    func applyMoyaMultipartFormData(_ multipartBody: [OnelightMoya.MultipartFormData]) {
         for bodyPart in multipartBody {
             switch bodyPart.provider {
             case .data(let data):

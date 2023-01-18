@@ -7,7 +7,7 @@ import OHHTTPStubs
 import OHHTTPStubsSwift
 #endif
 
-@testable import Moya
+@testable import OnelightMoya
 @testable import RxMoya
 
 final class MoyaProviderRxSpec: QuickSpec {
@@ -115,7 +115,7 @@ final class MoyaProviderRxSpec: QuickSpec {
 
                 expect(provider.inflightRequests.keys.count).to(equal(0))
 
-                var receivedResponse: Moya.Response!
+                var receivedResponse: OnelightMoya.Response!
 
                 _ = signalProducer1.subscribe { event in
                     switch event {

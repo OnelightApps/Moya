@@ -1,11 +1,11 @@
 import Quick
-import Moya
+import OnelightMoya
 import Nimble
 
 final class MethodSpec: QuickSpec {
     override func spec() {
         describe("supportsMultipart") {
-            let expectations: [(Moya.Method, Bool)] = [
+            let expectations: [(OnelightMoya.Method, Bool)] = [
                 (.get, false),
                 (.post, true),
                 (.put, true),

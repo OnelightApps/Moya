@@ -1,5 +1,5 @@
 import Foundation
-import Moya
+import OnelightMoya
 
 let giphyProvider = MoyaProvider<Giphy>()
 
@@ -15,7 +15,7 @@ extension Giphy: TargetType {
             return "/v1/gifs"
         }
     }
-    public var method: Moya.Method {
+    public var method: OnelightMoyaMethod {
         switch self {
         case .upload:
             return .post

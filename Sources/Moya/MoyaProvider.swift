@@ -1,7 +1,7 @@
 import Foundation
 
 /// Closure to be executed when a request has completed.
-public typealias Completion = (_ result: Result<Moya.Response, MoyaError>) -> Void
+public typealias Completion = (_ result: Result<OnelightMoya.Response, MoyaError>) -> Void
 
 /// Closure to be executed when progress changes.
 public typealias ProgressBlock = (_ progress: ProgressResponse) -> Void
@@ -45,7 +45,7 @@ public protocol MoyaProviderType: AnyObject {
     associatedtype Target: TargetType
 
     /// Designated request-making method. Returns a `Cancellable` token to cancel the request later.
-    func request(_ target: Target, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> Cancellable
+    func request(_ target: Target, callbackQueue: DispatchQueue?, progress: OnelightMoya.ProgressBlock?, completion: @escaping OnelightMoya.Completion) -> Cancellable
 }
 
 /// Request provider class. Requests should be made through this class only.
@@ -61,7 +61,7 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
     public typealias RequestClosure = (Endpoint, @escaping RequestResultClosure) -> Void
 
     /// Closure that decides if/how a request should be stubbed.
-    public typealias StubClosure = (Target) -> Moya.StubBehavior
+    public typealias StubClosure = (Target) -> OnelightMoya.StubBehavior
 
     /// A closure responsible for mapping a `TargetType` to an `EndPoint`.
     public let endpointClosure: EndpointClosure
@@ -81,10 +81,10 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
 
     public let trackInflights: Bool
 
-    open var inflightRequests: [Endpoint: [Moya.Completion]] { internalInflightRequests }
+    open var inflightRequests: [Endpoint: [OnelightMoya.Completion]] { internalInflightRequests }
 
     @Atomic
-    var internalInflightRequests: [Endpoint: [Moya.Completion]] = [:]
+    var internalInflightRequests: [Endpoint: [OnelightMoya.Completion]] = [:]
 
     /// Propagated to Alamofire as callback queue. If nil - the Alamofire default (as of their API in 2017 - the main queue) will be used.
     let callbackQueue: DispatchQueue?
@@ -130,7 +130,7 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
     /// and then use the returned `URLRequest` in the `createStubFunction` method.
     /// Note: this was previously in an extension, however it must be in the original class declaration to allow subclasses to override.
     @discardableResult
-    open func stubRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, completion: @escaping Moya.Completion, endpoint: Endpoint, stubBehavior: Moya.StubBehavior) -> CancellableToken {
+    open func stubRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, completion: @escaping OnelightMoya.Completion, endpoint: Endpoint, stubBehavior: Moya.StubBehavior) -> CancellableToken {
         let callbackQueue = callbackQueue ?? self.callbackQueue
         let cancellableToken = CancellableToken { }
         let preparedRequest = notifyPluginsOfImpendingStub(for: request, target: target)
@@ -180,26 +180,26 @@ public extension MoyaProvider {
     // at least add some class functions to allow easy access to common stubbing closures.
 
     /// Do not stub.
-    final class func neverStub(_: Target) -> Moya.StubBehavior { .never }
+    final class func neverStub(_: Target) -> OnelightMoya.StubBehavior { .never }
 
     /// Return a response immediately.
-    final class func immediatelyStub(_: Target) -> Moya.StubBehavior { .immediate }
+    final class func immediatelyStub(_: Target) -> OnelightMoya.StubBehavior { .immediate }
 
     /// Return a response after a delay.
-    final class func delayedStub(_ seconds: TimeInterval) -> (Target) -> Moya.StubBehavior {
+    final class func delayedStub(_ seconds: TimeInterval) -> (Target) -> OnelightMoya.StubBehavior {
         return { _ in .delayed(seconds: seconds) }
     }
 }
 
-/// A public function responsible for converting the result of a `URLRequest` to a Result<Moya.Response, MoyaError>.
+/// A public function responsible for converting the result of a `URLRequest` to a Result<OnelightMoya.Response, MoyaError>.
 public func convertResponseToResult(_ response: HTTPURLResponse?, request: URLRequest?, data: Data?, error: Swift.Error?) ->
-    Result<Moya.Response, MoyaError> {
+    Result<OnelightMoya.Response, MoyaError> {
         switch (response, data, error) {
         case let (.some(response), data, .none):
-            let response = Moya.Response(statusCode: response.statusCode, data: data ?? Data(), request: request, response: response)
+            let response = OnelightMoya.Response(statusCode: response.statusCode, data: data ?? Data(), request: request, response: response)
             return .success(response)
         case let (.some(response), _, .some(error)):
-            let response = Moya.Response(statusCode: response.statusCode, data: data ?? Data(), request: request, response: response)
+            let response = OnelightMoya.Response(statusCode: response.statusCode, data: data ?? Data(), request: request, response: response)
             let error = MoyaError.underlying(error, response)
             return .failure(error)
         case let (_, _, .some(error)):

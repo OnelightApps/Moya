@@ -1,5 +1,5 @@
 import UIKit
-import Moya
+import OnelightMoya
 
 let provider = MoyaProvider<MultiTarget>(plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))])
 

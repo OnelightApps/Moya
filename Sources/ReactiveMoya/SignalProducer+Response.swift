@@ -1,7 +1,7 @@
 import Foundation
 import ReactiveSwift
 #if !COCOAPODS
-    import Moya
+    import OnelightMoya
 #endif
 
 #if canImport(UIKit)

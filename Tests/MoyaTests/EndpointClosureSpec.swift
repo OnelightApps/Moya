@@ -2,7 +2,7 @@ import Foundation
 import Nimble
 import Quick
 import Alamofire
-@testable import Moya
+@testable import OnelightMoya
 
 final class EndpointClosureSpec: QuickSpec {
 
@@ -17,7 +17,7 @@ final class EndpointClosureSpec: QuickSpec {
 
                 switch target.task {
                 case let .uploadMultipart(multipartFormData):
-                    let additional = Moya.MultipartFormData(provider: .data("test2".data(using: .utf8)!), name: "test2")
+                    let additional = OnelightMoya.MultipartFormData(provider: .data("test2".data(using: .utf8)!), name: "test2")
                     var newMultipartFormData = multipartFormData
                     newMultipartFormData.append(additional)
                     task = .uploadMultipart(newMultipartFormData)
@@ -31,8 +31,8 @@ final class EndpointClosureSpec: QuickSpec {
         }
 
         it("appends additional multipart body in endpointClosure") {
-            let multipartData1 = Moya.MultipartFormData(provider: .data("test1".data(using: .utf8)!), name: "test1")
-            let multipartData2 = Moya.MultipartFormData(provider: .data("test2".data(using: .utf8)!), name: "test2")
+            let multipartData1 = OnelightMoya.MultipartFormData(provider: .data("test1".data(using: .utf8)!), name: "test1")
+            let multipartData2 = OnelightMoya.MultipartFormData(provider: .data("test2".data(using: .utf8)!), name: "test2")
 
             let providedMultipartData = [multipartData1]
             let sentMultipartData = [multipartData1, multipartData2]
