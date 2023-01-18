@@ -15,8 +15,6 @@ Pod::Spec.new do |s|
   s.social_media_url   = "http://twitter.com/ashfurrow"
   s.ios.deployment_target = '10.0'
   s.osx.deployment_target = '10.12'
-  s.tvos.deployment_target = '10.0'
-  s.watchos.deployment_target = '3.0'
   s.source       = { :git => "git@github.com:OnelightApps/Moya.git", :tag => s.version }
   s.default_subspec = "Core"
   s.swift_version = '5.3'
@@ -34,8 +32,6 @@ Pod::Spec.new do |s|
     ss.framework  = "Combine"
     ss.ios.deployment_target = '13.0'
     ss.osx.deployment_target = '10.15'
-    ss.tvos.deployment_target = '13.0'
-    ss.watchos.deployment_target = '6.0'
   end
 
   s.subspec "ReactiveSwift" do |ss|
